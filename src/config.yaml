@@ -1,0 +1,6 @@
+hotkeys:
+  movement:
+    north: w
+    south: s
+    west: a
+    east: d
