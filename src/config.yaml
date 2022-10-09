@@ -4,3 +4,7 @@ hotkeys:
     south: s
     west: a
     east: d
+    north_west: q
+    north_east: e
+    south_west: z
+    south_east: c
