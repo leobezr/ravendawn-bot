@@ -1,9 +1,7 @@
-from cv2 import threshold
 import pyautogui
 from lib.core import get_game_client
 from lib.player import Player
 from lib.pathfinder import pathfinder
-import math
 
 class Bot:
 
