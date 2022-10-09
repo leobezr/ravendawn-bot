@@ -6,23 +6,23 @@ import cv2 as cv
 
 def __main__():
     print("Script initiated")
-    start_bot_loop()
-
-def start_bot_loop():
-    print("Starting game loop")
-    # config = read_config()
     
     game_bot = Bot()
+    auto_path = True
 
     while True:
+        if keyboard.read_key() == "ctrl":
+            auto_path = not auto_path
 
-        if keyboard.read_key() == "space":
-            game_bot.chase_mouse()
+        if auto_path:
+            run_key_press_commands(game_bot)
 
         if cv.waitKey(1) == ord("q"):
             break
 
-    cv.destroyAllWindows()
+def run_key_press_commands(game_bot = Bot()):
+    if keyboard.read_key() == "space":
+        game_bot.chase_mouse()
 
 if __name__ == "__main__":
     __main__()
