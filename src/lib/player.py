@@ -1,33 +1,41 @@
 import pyautogui
+from lib.yaml_reader import read_config
+
+hotkeys = read_config()["hotkeys"]["movement"]
 
 class Player:
 
-    key_cooldown = 1
+    key_cooldown = .45
 
     def __init__(self):
         return
 
+    def _press(self, direction):
+        pyautogui.keyDown(direction)
+        pyautogui.sleep(self.key_cooldown)
+        pyautogui.keyUp(direction)
+
     def move(self, direction):
         if direction == "s":
-            pyautogui.press("s", self.key_cooldown)
+            self._press(hotkeys["south"])
 
         if direction == "n":
-            pyautogui.press("w", self.key_cooldown)
+            self._press(hotkeys["north"])
 
         if direction == "e":
-            pyautogui.press("d", self.key_cooldown)
+            self._press(hotkeys["east"])
 
         if direction == "w":
-            pyautogui.press("a", self.key_cooldown)
+            self._press(hotkeys["west"])
 
         if direction == "nw":
-            pyautogui.press("q", self.key_cooldown)
+            self._press(hotkeys["north_west"])
 
         if direction == "ne":
-            pyautogui.press("e", self.key_cooldown)
+            self._press(hotkeys["north_east"])
 
         if direction == "sw":
-            pyautogui.press("z", self.key_cooldown)
+            self._press(hotkeys["south_west"])
 
         if direction == "se":
-            pyautogui.press("c", self.key_cooldown)
+            self._press(hotkeys["south_east"])
