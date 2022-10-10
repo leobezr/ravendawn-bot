@@ -1,24 +1,39 @@
-from lib.yaml_reader import read_config
-from lib.core import get_game_client
 from lib.bot import Bot
+from lib.devtools.devtools import Devtool
 import keyboard
 import cv2 as cv
+import time
+
+# SCENE = cv.imread(r".\src\__mocks__\scene\attack_position\attacking-right.jpg")
+# NEEDLE = cv.imread(r".\src\target\attack-position\attacking-right.png")
 
 def __main__():
     print("Script initiated")
     
-    game_bot = Bot()
+    dev_mode = False
     auto_path = True
+    game_bot = Bot()
+    devtool = Devtool()
+
+    if dev_mode:
+        devtool.trackbar.start_up()
 
     while True:
-        if keyboard.read_key() == "ctrl":
-            auto_path = not auto_path
 
         if auto_path:
             run_key_press_commands(game_bot)
 
-        if cv.waitKey(1) == ord("q"):
-            break
+        if keyboard.read_key() == "ctrl":
+            auto_path = not auto_path
+            time.sleep(.3)
+        
+        if dev_mode:
+            key = cv.waitKey(1)
+            devtool.use_trackbars(SCENE)
+
+            if key == ord("q"):
+                cv.destroyAllWindows()
+                break
 
 def run_key_press_commands(game_bot = Bot()):
     if keyboard.read_key() == "space":
