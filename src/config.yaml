@@ -11,24 +11,28 @@ hotkeys:
 
 spells:
   increase_stamina:
-    spell_one: 
-      hotkey: f5
+    - hotkey: f5
       priority: 2
       needs_casting: False
-    spell_two: 
-      hotkey: 4
+
+    - hotkey: f5
+      priority: 2
+      needs_casting: False
+    
+    - hotkey: 4
       priority: 1
       needs_casting: False
-      
+
   needs_stamina:
-    spell_one:
-      hotkey: 1
+    - hotkey: 1
+      priority: 1
       needs_casting: False
-    spell_two:
-      hotkey: 2
+    
+    - hotkey: 2
       priority: 2
       needs_casting: False
-    spell_three:
-      hotkey: 3
+      
+    - hotkey: 3
       priority: 3
       needs_casting: True
+      
