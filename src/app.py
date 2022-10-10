@@ -4,8 +4,8 @@ import keyboard
 import cv2 as cv
 import time
 
-# SCENE = cv.imread(r".\src\__mocks__\scene\attack_position\attacking-right.jpg")
-# NEEDLE = cv.imread(r".\src\target\attack-position\attacking-right.png")
+SCENE = cv.imread(r".\src\__mocks__\scene\attack_position\attacking-right.jpg")
+NEEDLE = cv.imread(r".\src\target\attack-position\attacking-right.png")
 
 def __main__():
     print("Script initiated")
