@@ -27,4 +27,7 @@ class Bot:
         self.control.move(direction)
 
     def chase_mouse(self):
-        self.move(pathfinder())
+        self.player.attacker.attack()
+
+        if not self.attacker.casting:
+            self.move(pathfinder())
