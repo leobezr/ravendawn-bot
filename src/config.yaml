@@ -14,25 +14,26 @@ spells:
     - hotkey: f5
       priority: 2
       needs_casting: False
-
-    - hotkey: f5
-      priority: 2
-      needs_casting: False
+      stamina_amount: 20
     
     - hotkey: 4
       priority: 1
       needs_casting: False
+      stamina_amount: 40
 
   needs_stamina:
     - hotkey: 1
       priority: 1
       needs_casting: False
+      stamina_amount: -50
     
     - hotkey: 2
       priority: 2
       needs_casting: False
+      stamina_amount: -50
       
     - hotkey: 3
       priority: 3
       needs_casting: True
+      stamina_amount: -50
       
