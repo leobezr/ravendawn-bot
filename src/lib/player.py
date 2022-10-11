@@ -1,27 +1,30 @@
 import pyautogui
 from lib.yaml_reader import read_config
-from lib.attacker import Attacker
+from lib.attacker import attacker_instance
 
 hotkeys = read_config()["hotkeys"]["movement"]
 
 class Player:
 
-    attacker = Attacker()
-    key_cooldown = .35
+    attacker = attacker_instance
+    key_cooldown = .6
+    walking = False
 
     def __init__(self):
         return
 
     def _press(self, direction):
+        self.walking = True
         pyautogui.keyDown(direction)
         pyautogui.sleep(self.key_cooldown)
         pyautogui.keyUp(direction)
+        self.walking = False
 
     def get_is_casting(self):
         return self.attacker.casting
 
     def attack(self):
-        self.attacker.attack
+        self.attacker.attack(self.walking)
 
     def move(self, direction):
         if direction == "s":
