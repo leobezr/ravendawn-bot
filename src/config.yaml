@@ -1,3 +1,9 @@
+toolbar_position:
+  - 500
+  - 850
+  - 850
+  - 150
+
 hotkeys:
   movement:
     north: w
@@ -11,29 +17,34 @@ hotkeys:
 
 spells:
   increase_stamina:
-    - hotkey: f5
+    - hotkey: "f5"
       priority: 2
       needs_casting: False
-      stamina_amount: 20
-    
-    - hotkey: 4
+      cast_time: 0
+      target_anchor: ".\\src\\target\\spells\\wind-arrow.jpg"
+
+    - hotkey: "4"
       priority: 1
       needs_casting: False
-      stamina_amount: 40
+      cast_time: 0
+      target_anchor: ".\\src\\target\\spells\\spirit-rangers.jpg"
 
   needs_stamina:
-    - hotkey: 1
+    - hotkey: "1"
       priority: 1
       needs_casting: False
-      stamina_amount: -50
-    
-    - hotkey: 2
+      cast_time: 0
+      target_anchor: ".\\src\\target\\spells\\precision-shot.jpg"
+
+    - hotkey: "2"
       priority: 2
       needs_casting: False
-      stamina_amount: -50
-      
-    - hotkey: 3
+      cast_time: 0
+      target_anchor: ".\\src\\target\\spells\\viper-arrow.jpg"
+
+    - hotkey: "f5"
       priority: 3
-      needs_casting: True
-      stamina_amount: -50
+      needs_casting: False
+      cast_time: 0
+      target_anchor: ".\\src\\target\\spells\\wind-arrow.jpg"
       
