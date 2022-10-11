@@ -1,11 +1,16 @@
-from lib.vision import Vision
+from lib.vision import vision_instance
 from lib.devtools.trackbar import Trackbar
+from lib.attacker import attacker_instance
+from lib.yaml_reader import read_config
 import cv2 as cv
 
 class Devtool:
     scene = None
-    vision = Vision()
+    vision = vision_instance
     trackbar = Trackbar()
+    attacker = attacker_instance
+
+    toolbar_position = [left, top, width, height] = read_config()["toolbar_position"]
 
     def __init__(self):
         return
@@ -16,6 +21,16 @@ class Devtool:
     def use_trackbars(self, scene):
         self.trackbar.update(scene)
         cv.imshow("bla", self.trackbar.result)
+
+    def find_hook(self, hook, scene, level):
+        if scene is None:
+            scene = vision_instance.screenshot()
+
+        scene = vision_instance.get_target_hook(hook, level, scene=scene, threshold=.98, label="Spell")
+
+    def snapshot_toolbar(self):
+        return self.vision.screenshot(self.left, self.top, self.width, self.height)
+
 
     def show(self, scene):
         self.vision.show()
