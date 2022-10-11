@@ -6,7 +6,7 @@ from lib.pathfinder import pathfinder
 class Bot:
 
     client = None
-    control = Player()
+    player = Player()
     
     win_w, win_h = pyautogui.size()
     center_w, center_h = (win_w / 2, win_h / 2)
@@ -24,10 +24,11 @@ class Bot:
 
     def move(self, direction):
         self.focus()
-        self.control.move(direction)
+        self.player.move(direction)
+
+    def attack(self):
+        self.player.attack()
 
     def chase_mouse(self):
-        self.player.attacker.attack()
-
-        if not self.attacker.casting:
+        if not self.player.get_is_casting():
             self.move(pathfinder())
