@@ -3,11 +3,12 @@ import numpy as np
 import cv2 as cv
 import mss
 
-DEBUG_MODE = True
+DEBUG_MODE = False
 
 threshold = 0.8
 DEFAULT_CV2_METHOD = cv.TM_CCOEFF_NORMED
 DEFAULT_CV2_BORDERCOLOR = (255, 0, 176)
+vision_instance = None
 
 class Vision:
     # Window Settings
@@ -15,6 +16,19 @@ class Vision:
 
     def __init__(self):
         return
+
+    def get_target_hook(self, needle, levels, scene=None, threshold=.6, return_scene=False, label=False, crop=[0, 0, 0, 0]):
+        if scene is None:
+            left, top, width, height = crop
+            scene = self.screenshot(left, top, width, height)
+
+        hsv_levels = self.hsv(scene, levels)
+
+        if return_scene:
+            return hsv_levels
+
+        return self.find(needle, hsv_levels, threshold=threshold, label=label, show_window=True)
+
 
     def screenshot(self, left=0, top=0, width=0, height=0):
         stc = mss.mss()
@@ -50,13 +64,8 @@ class Vision:
         _, max_val, _, max_loc = cv.minMaxLoc(result)
 
         if max_val >= threshold:
-            message = str("Found needle accuracy of: {}".format(max_val))
-
-            if label:
-                message += str(" with label name: {}".format(label))
-
-            if not silent:
-                print(message)
+            if not silent and label:
+                print(f"Success: {max_val}, label: {label}")
 
             if DEBUG_MODE or show_window:
                 needle_w, needle_h = (needle.shape[0], needle.shape[1])
@@ -65,7 +74,8 @@ class Vision:
             return True
         else:
             if DEBUG_MODE:
-                print(f"Failed to find needle with {max_val} accuracy")
+                print(f"Failed accuracy: {max_val}, Label: {label}")
+                self.show(scene_as_haystack)
 
             return False
 
@@ -100,10 +110,12 @@ class Vision:
     def add_rect(self, frame, position, size, color=(0, 0, 255)):
         return cv.rectangle(frame, position, size, color, thickness=2)
 
-    def target_circle_mask(self, scene):
-        return self.hsv(scene, 0, 222, 151, 5, 255, 255)
+    # def target_circle_mask(self):
+    #     return self._apply_mask(0, 222, 151, 5, 255, 255)
 
-    def hsv(self, scene, h_min, s_min, v_min, h_max, s_max, v_max):
+    def hsv(self, scene, levels):
+        [h_min, s_min, v_min, h_max, s_max, v_max] = levels
+
         lower = np.array([h_min, s_min, v_min])
         upper = np.array([h_max, s_max, v_max])
 
@@ -113,3 +125,7 @@ class Vision:
         result = cv.bitwise_and(scene, scene, mask=mask)
 
         return result
+
+
+if not vision_instance:
+    vision_instance = Vision()
