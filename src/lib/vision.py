@@ -11,7 +11,6 @@ DEFAULT_CV2_BORDERCOLOR = (255, 0, 176)
 vision_instance = None
 
 class Vision:
-    # Window Settings
     w, h = pyautogui.size()
 
     def __init__(self):
@@ -27,7 +26,7 @@ class Vision:
         if return_scene:
             return hsv_levels
 
-        return self.find(needle, hsv_levels, threshold=threshold, label=label, show_window=True)
+        return self.find(needle, hsv_levels, threshold=threshold, label=label)
 
 
     def screenshot(self, left=0, top=0, width=0, height=0):
@@ -73,8 +72,8 @@ class Vision:
 
             return True
         else:
-            if DEBUG_MODE:
-                print(f"Failed accuracy: {max_val}, Label: {label}")
+            if DEBUG_MODE or label:
+                print(f"Failed accuracy: {max_val}, Label: {label}, Expected threshold: {threshold}")
                 self.show(scene_as_haystack)
 
             return False
