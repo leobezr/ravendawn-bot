@@ -1,11 +1,8 @@
-from lib.bot import Bot
+from lib.threads.bot import auto_targeting
 from lib.devtools.devtools import Devtool
 import keyboard
 import cv2 as cv
 import time
-import threading
-
-from lib.masks import Masks
 
 
 def __main__():
@@ -13,40 +10,36 @@ def __main__():
     
     dev_mode = False
     auto_path = True
-    game_bot = Bot()
-    devtool = Devtool()
+    loop = 1
+    devtool = Devtool(dev_mode)
 
-    if dev_mode:
-        devtool.trackbar.start_up()
-
-    while 1:
+    while loop:
 
         if dev_mode:
             key = cv.waitKey(1)
-            # devtool.use_trackbars(STAMINA_MEDIUM)
-            scene = devtool.snapshot_toolbar()
-            devtool.find_hook(STAMINA, scene, Masks.STAMINA)
-            
+            devtool.test(use_trackbars=False)
 
             if key == ord("q"):
                 cv.destroyAllWindows()
                 break
         else:
             if auto_path:
-                run_key_press_commands(game_bot)
+                run_key_press_commands()
 
-            if keyboard.read_key() == "ctrl":
+            if keyboard.read_key() == "pause":
                 auto_path = not auto_path
                 print(f"Auto path is set to {auto_path}")
-                time.sleep(.3)
+                time.sleep(.2)
 
-def run_key_press_commands(game_bot = Bot()):
+            if keyboard.read_key() == "end":
+                print("Bot loop stopped")
+                loop = False
+                time.sleep(.2)
+                break
+
+def run_key_press_commands():
     if keyboard.read_key() == "space":
-        mouse_chaser_thread = threading.Thread(target=game_bot.chase_mouse)
-        attack_handler_thread = threading.Thread(target=game_bot.attack)
-
-        mouse_chaser_thread.start()
-        attack_handler_thread.start()
+        auto_targeting()
 
 if __name__ == "__main__":
     __main__()
