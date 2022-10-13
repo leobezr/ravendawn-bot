@@ -16,16 +16,16 @@ class Trackbar:
     def __init__(self):
         return
 
-    def start_up(self):
+    def start_up(self, hMin=56, sMin=213, vMin=165, hMax=89, sMax=255, vMax=255):
         # Create trackbars for color change
         # Hue is from 0-179 for Opencv
         cv2.namedWindow("controller")
-        cv2.createTrackbar("HMin", "controller", 56, 179, nothing)
-        cv2.createTrackbar("SMin", "controller", 213, 255, nothing)
-        cv2.createTrackbar("VMin", "controller", 165, 255, nothing)
-        cv2.createTrackbar("HMax", "controller", 89, 179, nothing)
-        cv2.createTrackbar("SMax", "controller", 255, 255, nothing)
-        cv2.createTrackbar("VMax", "controller", 255, 255, nothing)
+        cv2.createTrackbar("HMin", "controller", hMin, 179, nothing)
+        cv2.createTrackbar("SMin", "controller", sMin, 255, nothing)
+        cv2.createTrackbar("VMin", "controller", vMin, 255, nothing)
+        cv2.createTrackbar("HMax", "controller", hMax, 179, nothing)
+        cv2.createTrackbar("SMax", "controller", sMax, 255, nothing)
+        cv2.createTrackbar("VMax", "controller", vMax, 255, nothing)
 
     def update(self, image):
         # Get current positions of all trackbars
