@@ -1,3 +1,7 @@
 *.pyo
 *.pyc
 __pycache__
+
+dist/
+build/
+app.spec
