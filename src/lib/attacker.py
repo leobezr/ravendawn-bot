@@ -1,11 +1,11 @@
 from lib.yaml_reader import read_config
 from lib.vision import vision_instance
 from lib.masks import Masks
+from lib.anchors import Anchor, get_link
 import pyautogui
-import cv2 as cv
 
-TARGET_CIRCLE = cv.imread(r".\src\target\attack-position\target-circle.jpg")
-STAMINA_HOOK = cv.imread(r".\src\target\attack-position\min-stamina.jpg")
+TARGET_CIRCLE = Anchor.TARGET_CIRCLE
+STAMINA_HOOK = Anchor.STAMINA_HOOK
 LOG_ATTACKS = False
 
 attacker_instance = None
@@ -52,10 +52,10 @@ class Attacker:
         self._sort_list(self.needs_stamina)
 
         for spell in self.increase_stamina:
-            spell["target_anchor"] = cv.imread(spell["target_anchor"])
+            spell["target_anchor"] = get_link(spell["target_anchor"])
 
         for spell in self.needs_stamina:
-            spell["target_anchor"] = cv.imread(spell["target_anchor"])
+            spell["target_anchor"] = get_link(spell["target_anchor"])
 
     def attack(self, is_walking):
         if self.is_attacking():
