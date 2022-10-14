@@ -16,7 +16,7 @@ class Vision:
     def __init__(self):
         return
 
-    def get_target_hook(self, needle, levels, scene=None, threshold=.6, return_scene=False, label=False, crop=[0, 0, 0, 0]):
+    def get_target_hook(self, needle, levels, scene=None, threshold=.6, return_scene=False, label=False, crop=[0, 0, 0, 0], show_window=False):
         if scene is None:
             left, top, width, height = crop
             scene = self.screenshot(left, top, width, height)
@@ -26,7 +26,7 @@ class Vision:
         if return_scene:
             return hsv_levels
 
-        return self.find(needle, hsv_levels, threshold=threshold, label=label)
+        return self.find(needle, hsv_levels, threshold=threshold, label=label, show_window=show_window)
 
 
     def screenshot(self, left=0, top=0, width=0, height=0):
