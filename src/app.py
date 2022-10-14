@@ -1,6 +1,7 @@
 from lib.threads.bot import auto_targeting
 from lib.threads.gathering import auto_gathering
 from lib.devtools.devtools import Devtool
+from lib.requirement_hooks import *
 import keyboard
 import cv2 as cv
 import time

@@ -1,0 +1,5 @@
+hiddenimports = [
+    "pyautogui",
+    "yaml",
+    "mss"
+]
