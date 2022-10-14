@@ -1,4 +1,5 @@
 from lib.threads.bot import auto_targeting
+from lib.threads.gathering import auto_gathering
 from lib.devtools.devtools import Devtool
 import keyboard
 import cv2 as cv
@@ -8,23 +9,25 @@ import time
 def __main__():
     print("Script initiated")
     
-    dev_mode = False
+    dev_mode = True
     auto_path = True
     loop = 1
     devtool = Devtool(dev_mode)
 
     while loop:
+        key = cv.waitKey(1)
+        if key == ord("q"):
+            cv.destroyAllWindows()
+            break
 
         if dev_mode:
-            key = cv.waitKey(1)
-            devtool.test(use_trackbars=False)
+            # devtool.test(use_trackbars=False)
+            devtool.test_pointers()
 
-            if key == ord("q"):
-                cv.destroyAllWindows()
-                break
         else:
             if auto_path:
-                run_key_press_commands()
+                auto_gathering()
+                auto_targeting()
 
             if keyboard.read_key() == "pause":
                 auto_path = not auto_path
@@ -36,10 +39,6 @@ def __main__():
                 loop = False
                 time.sleep(.2)
                 break
-
-def run_key_press_commands():
-    if keyboard.read_key() == "space":
-        auto_targeting()
 
 if __name__ == "__main__":
     __main__()
