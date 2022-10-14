@@ -2,6 +2,9 @@ import os
 import yaml
 import io
 
+def get_root_dir():
+    return os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 def get_config_path():
     ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
