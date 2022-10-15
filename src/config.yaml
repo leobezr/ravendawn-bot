@@ -10,6 +10,12 @@ gathering_position:
   - 500
   - 180
 
+map_position:
+  - 1773
+  - 173
+  - 190
+  - 190
+
 hotkeys:
   movement:
     north: w
