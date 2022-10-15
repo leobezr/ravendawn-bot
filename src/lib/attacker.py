@@ -16,6 +16,8 @@ class Attacker:
 
     increase_stamina = read_config()["spells"]["increase_stamina"]
     needs_stamina = read_config()["spells"]["needs_stamina"]
+    
+    player_attacking = False
 
     def _snapshot_toolbar(self):
         [left, top, width, height] = self.toolbar_position
@@ -77,13 +79,11 @@ class Attacker:
                 self._use_spell(spell, scene)
 
     def is_attacking(self):
-        return vision_instance.get_target_hook(TARGET_CIRCLE, Masks.TARGET_CIRCLE, threshold=.36)
+        self.player_attacking = vision_instance.get_target_hook(TARGET_CIRCLE, Masks.TARGET_CIRCLE, threshold=.36)
+        return self.player_attacking
 
     def has_stamina(self):
         return vision_instance.get_target_hook(STAMINA_HOOK, Masks.STAMINA, threshold=.49, crop=self.toolbar_position)
-
-    def use_spell_increase_stamina(self):
-        return
 
 if not attacker_instance:
     attacker_instance = Attacker()
