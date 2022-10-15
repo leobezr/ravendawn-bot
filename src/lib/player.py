@@ -50,3 +50,8 @@ class Player:
 
         if direction == "se":
             self._press(hotkeys["south_east"])
+
+player_instance = None
+
+if not player_instance:
+    player_instance = Player()

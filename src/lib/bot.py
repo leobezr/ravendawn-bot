@@ -1,18 +1,17 @@
 import pyautogui
 from lib.core import get_game_client
-from lib.player import Player
+from lib.player import player_instance
 from lib.pathfinder import pathfinder
 
 class Bot:
 
     client = None
-    player = Player()
+    player = player_instance
     
     win_w, win_h = pyautogui.size()
     center_w, center_h = (win_w / 2, win_h / 2)
 
     def __init__(self):
-        print("Ravendawn Bot Started")
         self.client = get_game_client()
 
     def _get_mouse_pos(self):
@@ -32,3 +31,8 @@ class Bot:
     def chase_mouse(self):
         if not self.player.get_is_casting():
             self.move(pathfinder())
+
+bot_instance = None
+
+if not bot_instance:
+    bot_instance = Bot()
