@@ -4,6 +4,7 @@ from lib.attacker import attacker_instance
 from lib.yaml_reader import read_config
 from lib.masks import Masks
 from lib.pointer import get_pointer, game_module
+import time
 import cv2 as cv
 
 
@@ -54,12 +55,13 @@ class Devtool:
         else:
             self.find_hook(NEEDLE, self.snapshot_gathering(), Masks.GATHERING_NEEDLE, threshold=.7)
 
-    def test_pointers(self):
+    def print_waypoint(self):
         posX = get_pointer(game_module + 0x024BB0A8, [0x40, 0xB1C])
         posY = get_pointer(game_module + 0x024BB0A8, [0x40, 0xB20])
         posZ = get_pointer(game_module + 0x024BB0A8, [0x40, 0xB24])
 
         print(posX, posY, posZ)
+
 
     def show(self, scene):
         self.vision.show()
