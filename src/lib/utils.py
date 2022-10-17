@@ -1,11 +1,12 @@
 import math
 
 
-class UtilsHelper:
+class Utils:
     def __init__(self):
         return
 
-    def is_colliding(self, posOne, posTwo):
+    @staticmethod
+    def is_colliding(posOne, posTwo):
         x1, y1, r1 = posOne
         x2, y2, r2 = posTwo
 
@@ -17,13 +18,8 @@ class UtilsHelper:
         colliding = distance < r1 + r2
         return colliding
 
-    def log(self, msg, logSteps=True):
+    @staticmethod
+    def log(msg, logSteps=True):
         if logSteps:
             print(msg)
             print("====================================================")
-
-
-Utils = None
-
-if not Utils:
-    Utils = UtilsHelper()
