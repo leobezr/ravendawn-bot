@@ -5,6 +5,8 @@
     "Opencv",
     "ptypes",
     "pymem",
+    "pynput",
+    "ravencrest",
     "Ravendawn",
     "Trackbar",
     "trackbars"
