@@ -1,7 +1,7 @@
 from lib.yaml_reader import read_config
 from lib.vision import vision_instance
-from lib.masks import Masks
 from lib.anchors import Anchor, get_link
+from lib.pointer import get_pointer, game_module
 import pyautogui
 
 TARGET_CIRCLE = Anchor.TARGET_CIRCLE
@@ -9,6 +9,19 @@ STAMINA_HOOK = Anchor.STAMINA_HOOK
 LOG_ATTACKS = False
 
 attacker_instance = None
+
+STAMINA = {
+    "10": 1076101120,
+    "20": 1077149696,
+    "30": 1077805056,
+    "40": 1078198272,
+    "50": 1078525952,
+    "60": 1078853632,
+    "70": 1079083008,
+    "80": 1079246848,
+    "90": 1079410688,
+    "100": 1079574528
+}
 
 class Attacker:
     toolbar_position = [left, top, width, height] = read_config()["toolbar_position"]
@@ -29,21 +42,8 @@ class Attacker:
         
         list.sort(key=return_priority)
 
-    def _use_spell(self, spell, scene):
-        if vision_instance.get_target_hook(spell["target_anchor"], Masks.SPELLS, threshold=.9, scene=scene):
-            if spell["needs_casting"]:
-                self.casting = True
-                pyautogui.sleep(1)
-
-                pyautogui.press(spell["hotkey"])
-                pyautogui.sleep(spell["needs_casting"])
-                self._log(f"Pressed {spell['hotkey']} key")
-            else:
-                self.casting = False
-
-                pyautogui.press(spell["hotkey"])
-                self._log(f"Pressed {spell['hotkey']} key")
-                pyautogui.sleep(1)
+    def _use_spell(self, spell):
+        pyautogui.press(spell["hotkey"])
     
     def _log(self, msg):
         if LOG_ATTACKS:
@@ -64,26 +64,28 @@ class Attacker:
             self.cast_spells(is_walking)
         else:
             pyautogui.press("tab")
+            pyautogui.sleep(.4)
     
     def cast_spells(self, is_walking):
-        scene = self._snapshot_toolbar()
-
         if self.has_stamina():
             for spell in self.needs_stamina:
                 self._log("Using stamina spells")
-                self._use_spell(spell, scene)
+                self._use_spell(spell)
 
         else:
             for spell in self.increase_stamina:
                 self._log("Recovering stamina")
-                self._use_spell(spell, scene)
+                self._use_spell(spell)
 
     def is_attacking(self):
-        self.player_attacking = vision_instance.get_target_hook(TARGET_CIRCLE, Masks.TARGET_CIRCLE, threshold=.36)
+        target_id = get_pointer(game_module + 0x024BA6C0, [0xED8])
+        self.player_attacking = target_id != 0
+        
         return self.player_attacking
 
     def has_stamina(self):
-        return vision_instance.get_target_hook(STAMINA_HOOK, Masks.STAMINA, threshold=.49, crop=self.toolbar_position)
+        stamina_amount = get_pointer(game_module + 0x024BAF70, [0xBDC])
+        return stamina_amount >= STAMINA["50"]
 
 if not attacker_instance:
     attacker_instance = Attacker()
