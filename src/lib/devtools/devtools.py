@@ -4,7 +4,7 @@ from lib.attacker import attacker_instance
 from lib.yaml_reader import read_config
 from lib.masks import Masks
 from lib.pointer import get_pointer, game_module
-import time
+from lib.utils import Utils
 import cv2 as cv
 
 
@@ -22,6 +22,7 @@ class Devtool:
     def __init__(self, is_on):
         if is_on:
             self.set_env()
+            Utils.log(f"Running in DEV mode")
 
         return
 
@@ -61,6 +62,14 @@ class Devtool:
         posZ = get_pointer(game_module + 0x024BB0A8, [0x40, 0xB24])
 
         print(posX, posY, posZ)
+
+    def is_attacking(self):
+        target_id = get_pointer(game_module + 0x024BA6C0, [0xED8])
+        print(target_id != 0)
+
+    def get_stamina(self):
+        stamina_amount = get_pointer(game_module + 0x024BAF70, [0xBDC])
+        print(stamina_amount)
 
 
     def show(self, scene):
