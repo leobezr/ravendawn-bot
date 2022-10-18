@@ -30,39 +30,38 @@ hotkeys:
 spells:
   increase_stamina:
     - hotkey: "f5"
+      priority: 1
+      needs_casting: False
+      cast_time: 0
+
+    - hotkey: "4"
       priority: 2
       needs_casting: False
       cast_time: 0
-      target_anchor: ".\\target\\spells\\wind-arrow.jpg"
-
-    - hotkey: "4"
-      priority: 1
-      needs_casting: False
-      cast_time: 0
-      target_anchor: ".\\target\\spells\\spirit-rangers.jpg"
 
   needs_stamina:
-    - hotkey: "2"
-      priority: 1
-      needs_casting: False
-      cast_time: 0
-      target_anchor: ".\\target\\spells\\dragons-arrow.jpg"
-
     - hotkey: "1"
       priority: 2
       needs_casting: False
       cast_time: 0
-      target_anchor: ".\\target\\spells\\precision-shot.jpg"
+
+    - hotkey: "2"
+      priority: 1
+      needs_casting: False
+      cast_time: 0
 
     - hotkey: "5"
       priority: 3
       needs_casting: False
       cast_time: 0
-      target_anchor: ".\\target\\spells\\viper-arrow.jpg"
 
-    - hotkey: "f5"
+    - hotkey: "3"
       priority: 4
       needs_casting: False
       cast_time: 0
-      target_anchor: ".\\target\\spells\\wind-arrow.jpg"
+
+    - hotkey: "f5"
+      priority: 5
+      needs_casting: False
+      cast_time: 0
       
