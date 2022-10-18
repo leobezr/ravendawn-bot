@@ -30,6 +30,8 @@ class Bot:
         self.player.attack()
 
     def chase_mouse(self):
+        self.attack()
+        
         if not self.player.get_is_casting():
             self.move(pathfinder())
 
