@@ -6,7 +6,7 @@ import time
 
 map_position = read_config()["map_position"]
 MS_PER_SQM = .18
-SQM_SIZE = 1.65
+SQM_SIZE = 2
 LOG_STEPS = False
 
 
