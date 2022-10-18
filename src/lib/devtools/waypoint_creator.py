@@ -14,9 +14,9 @@ class WaypointCreator:
             self.remove_last()
 
     def register(self):
-        posX = get_pointer(game_module + 0x024BB0A8, [0x40, 0xB1C])
-        posY = get_pointer(game_module + 0x024BB0A8, [0x40, 0xB20])
-        posZ = get_pointer(game_module + 0x024BB0A8, [0x40, 0xB24])
+        posX = get_pointer(game_module + 0x024BB0C8, [0x40, 0xB1C])
+        posY = get_pointer(game_module + 0x024BB0C8, [0x40, 0xB20])
+        posZ = get_pointer(game_module + 0x024BB0C8, [0x40, 0xB24])
 
         if not any(wpt == (posX, posY, posZ) for wpt in self.waypoints):
             self.waypoints.append((posX, posY, posZ))
