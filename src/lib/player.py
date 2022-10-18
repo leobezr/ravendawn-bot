@@ -26,6 +26,9 @@ class Player:
     def attack(self):
         self.attacker.attack(self.walking)
 
+    def is_attacking(self):
+        return self.attacker.is_attacking()
+
     def move(self, direction):
         if direction == "s":
             self._press(hotkeys["south"])
