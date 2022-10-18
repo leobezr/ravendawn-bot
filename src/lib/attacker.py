@@ -1,7 +1,8 @@
 from lib.yaml_reader import read_config
 from lib.vision import vision_instance
-from lib.anchors import Anchor, get_link
+from lib.anchors import Anchor
 from lib.pointer import get_pointer, game_module
+from threading import Thread
 import pyautogui
 
 TARGET_CIRCLE = Anchor.TARGET_CIRCLE
@@ -43,7 +44,7 @@ class Attacker:
         list.sort(key=return_priority)
 
     def _use_spell(self, spell):
-        pyautogui.press(spell["hotkey"])
+        pyautogui.press(spell["hotkey"], interval=.1)
     
     def _log(self, msg):
         if LOG_ATTACKS:
@@ -53,24 +54,18 @@ class Attacker:
         self._sort_list(self.increase_stamina)
         self._sort_list(self.needs_stamina)
 
-        for spell in self.increase_stamina:
-            spell["target_anchor"] = get_link(spell["target_anchor"])
-
-        for spell in self.needs_stamina:
-            spell["target_anchor"] = get_link(spell["target_anchor"])
-
-    def attack(self, is_walking):
+    def attack(self):
         if self.is_attacking():
-            self.cast_spells(is_walking)
+            self.cast_spells()
         else:
-            pyautogui.press("tab")
-            pyautogui.sleep(.4)
+            pyautogui.press("tab", interval=.6)
     
-    def cast_spells(self, is_walking):
+    def cast_spells(self):
         if self.has_stamina():
             for spell in self.needs_stamina:
                 self._log("Using stamina spells")
                 self._use_spell(spell)
+                pyautogui.sleep(.05)
 
         else:
             for spell in self.increase_stamina:
@@ -78,13 +73,22 @@ class Attacker:
                 self._use_spell(spell)
 
     def is_attacking(self):
-        target_id = get_pointer(game_module + 0x024BA6C0, [0xED8])
+        target_id = get_pointer(game_module + 0x024BA568, [0xA18])
         self.player_attacking = target_id != 0
         
         return self.player_attacking
 
+    def standalone_attack(self):
+        def attack():
+            while 1:
+                self.attack()
+                pyautogui.sleep(.01)
+
+        targetThread = Thread(target=attack)
+        targetThread.start()
+
     def has_stamina(self):
-        stamina_amount = get_pointer(game_module + 0x024BAF70, [0xBDC])
+        stamina_amount = get_pointer(game_module + 0x024BAF90, [0x180, 0xC04])
         return stamina_amount >= STAMINA["50"]
 
 if not attacker_instance:
