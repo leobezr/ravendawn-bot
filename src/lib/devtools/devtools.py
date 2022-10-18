@@ -3,7 +3,7 @@ from lib.devtools.trackbar import Trackbar
 from lib.attacker import attacker_instance
 from lib.yaml_reader import read_config
 from lib.masks import Masks
-from lib.pointer import get_pointer, game_module
+import lib.pointer as Pointer
 from lib.utils import Utils
 import cv2 as cv
 
@@ -57,19 +57,16 @@ class Devtool:
             self.find_hook(NEEDLE, self.snapshot_gathering(), Masks.GATHERING_NEEDLE, threshold=.7)
 
     def print_waypoint(self):
-        posX = get_pointer(game_module + 0x024BB0A8, [0x40, 0xB1C])
-        posY = get_pointer(game_module + 0x024BB0A8, [0x40, 0xB20])
-        posZ = get_pointer(game_module + 0x024BB0A8, [0x40, 0xB24])
-
-        print(posX, posY, posZ)
+        print(Pointer.position())
 
     def is_attacking(self):
-        target_id = get_pointer(game_module + 0x024BA6C0, [0xED8])
-        print(target_id != 0)
+        print(Pointer.is_attacking())
+
+    def health(self):
+        print(Pointer.health_percent())
 
     def get_stamina(self):
-        stamina_amount = get_pointer(game_module + 0x024BAF70, [0xBDC])
-        print(stamina_amount)
+        print(Pointer.stamina_amount())
 
 
     def show(self, scene):
